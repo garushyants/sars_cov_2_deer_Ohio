@@ -1,0 +1,14 @@
+cluster 1	NODE_0000489
+cluster 2	NODE_0000444
+cluster 3	NODE_0000451
+cluster 4	NODE_0000243
+cluster 5	NODE_0000214
+cluster 6	NODE_0000191
+cluster 7	NODE_0000267
+cluster 8	NODE_0000361
+cluster 9	NODE_0000100
+cluster 10	NODE_0000173
+cluster 11	NODE_0000169
+cluster 12	NODE_0000155
+cluster 13	NODE_0000157
+cluster 14	NODE_0000163
