@@ -5,15 +5,19 @@ library(ggpubr)
 library(stringr)
 library(reshape2)
 library(gridExtra)
-
+library("rstudioapi")
+library(DescTools)
+path<-getSourceEditorContext()$path
+setwd(SplitPath(path)$dirname)
 
 #set path
-setwd("/panfs/pan1.be-md.ncbi.nlm.nih.gov/virbac/sars_cov_2_deers/20220921_final_vcfs")
+setwd("../data/Delta")
 
-folder = "figures_20220929"
+folder = "figures_along_genome"
+
 ###########Read SARS-CoV-2 genomic data from gff
 #Read annotation and get data
-GFFDf <- read.csv("../vep_data_20220506/Sars_cov_2.ASM985889v3.101.gff3", skip = 8, header = F, sep="\t")
+GFFDf <- read.csv("../vep_data/Sars_cov_2.ASM985889v3.101.gff3", skip = 8, header = F, sep="\t")
 geneDf<-subset(GFFDf,GFFDf$V3 == "gene")
 geneDfA<-separate(data = geneDf, col = V9, into = c("A1","gene","A3","A4","A5","A6","A7"), sep = ";")
 geneDfA$gene <- gsub('Name=', '', geneDfA$gene)
@@ -27,7 +31,7 @@ geneDfA$ymax<-rep(ymax, 6,length.out = length(geneDfA$V1))
 
 
 #adding info about parts of ORF1ab
-ORF1ab<-read.csv("../vep_data_20220506/NC_045512.2_ORF1ab.tsv", header = F, sep="\t")
+ORF1ab<-read.csv("../vep_data/NC_045512.2_ORF1ab.tsv", header = F, sep="\t")
 ORF1abINFO<-separate(data = ORF1ab, col = V9, into = c("A1","A2","A3","A4","gene","A6"), sep = ";")
 ORF1abINFO$gene <- gsub('product=', '', ORF1abINFO$gene)
 ORF1abINFO$ymin<-rep(0,length(ORF1abINFO$V1))
@@ -78,13 +82,13 @@ SARSCoVGenome
 ########################################################
 ########################################################
 #Read annotated vcfs with cluster mutations
-setwd("/panfs/pan1.be-md.ncbi.nlm.nih.gov/virbac/sars_cov_2_deers/20220926_redefined_delta_clusters")
+setwd("./")
 
 #load cluster names
 ClusterNames<-read.csv("Clusters_rename_rule.txt", sep ="\t", header =F)
 colnames(ClusterNames)<-c("Cluster", "ClusterNode")
 
-AnnotatedVCF<-read.csv("Delta.clusters.snpeff.redefined_clusters.vcf", skip=8, header =F, sep='\t')
+AnnotatedVCF<-read.csv("Delta.clusters.snpeff.corrected.vcf", skip=8, header =F, sep='\t')
 AnnotatedVCFINFOA<-separate(data = AnnotatedVCF, col = V8,
                            into = c("ClusterNode","INFOelse"),
                            sep = ',')
@@ -105,7 +109,7 @@ AnnotatedVCFINFOE<-separate(data = AnnotatedVCFINFOD, col = Prot_long,
 AnnotatedVCFINFO<-AnnotatedVCFINFOE[,c(1:10,13,14,17,18)]
 AnnotatedVCFINFO$ClusterNode <- gsub('Cluster=', '', AnnotatedVCFINFO$ClusterNode)
 AnnotatedVCFINFO$Node <- gsub('Node=', '', AnnotatedVCFINFO$Node)
-AnnotatedVCFINFO$ProtChange <- gsub('p.', '', AnnotatedVCFINFO$ProtChange)
+AnnotatedVCFINFO$ProtChange <- gsub('p.', '', AnnotatedVCFINFO$ProtChange, fixed=T)
 AnnotatedVCFINFO$MutType <- gsub('EFF=', '', AnnotatedVCFINFO$MutType)
 AnnotatedVCFINFO$Change<-paste(AnnotatedVCFINFO$V4,">",AnnotatedVCFINFO$V5,
                                sep="")
@@ -114,25 +118,12 @@ AnnotatedVCFINFOProperNames<-merge(AnnotatedVCFINFO, ClusterNames, by ="ClusterN
 
 Clusterlevel<-data.frame(Cluster=unique(AnnotatedVCFINFOProperNames$Cluster), 
                          level=seq(1,length(unique(AnnotatedVCFINFOProperNames$Cluster))))
-AnnotatedVCFINFOLev<-merge(AnnotatedVCFINFOProperNames,Clusterlevel, by="Cluster")
-
-
-
-###remove problematic sites
-#Check this additional list of Ambiquous sites from here: https://github.com/W-L/ProblematicSites_SARS-CoV2
-
-ProbLematicSitesDf<-read.csv("problematic_sites_sarsCov2.vcf", comment.char = "#", header = F, sep = "\t")
-ProbLematicSitesDfMask<-subset(ProbLematicSitesDf, ProbLematicSitesDf$V7 == "mask")
-
-#I am masking problematic sites
-AnnotatedVCFINFOLevNoPr<-subset(AnnotatedVCFINFOLev,
-                                    !(AnnotatedVCFINFOLev$V2 %in% ProbLematicSitesDfMask$V2))
-
+AnnotatedVCFINFOLevNoPr<-merge(AnnotatedVCFINFOProperNames,Clusterlevel, by="Cluster")
 #########################################
-#Save all to file for supplementary table
-ToSave<-AnnotatedVCFINFOLevNoPr[,c(1,3:4,6,7,10:14,16)]
-
-write.csv(ToSave,file="Deltas_noproblematic_suppltableN3.csv",row.names = F, quote=F)
+# #Save all to file for supplementary table
+# ToSave<-AnnotatedVCFINFOLevNoPr[,c(2,3:4,6,7,10:14,16)]
+# 
+# write.csv(ToSave,file="Delta.noproblematic.mutations.csv",row.names = F, quote=F)
 
 #########################################
 ##
@@ -142,22 +133,6 @@ MutsPerGene<-AnnotatedVCFINFOLevNoPr %>% group_by(Cluster,gene) %>% count()
 #Check selection in S
 subset(MutsPerGene, MutsPerGene$gene=='S' & MutsPerGene$n > 5)
 
-# #####I can try to remove sites within ARTIC primers
-# Artic<-read.csv("ARTICv3_nCoV-2019.primer.no_alt.bed", header = F, sep = "\t")
-# 
-# mIntervalsdf<-Artic[,2:3]
-# mIntervals<-mIntervalsdf[order(mIntervalsdf$V2),]
-# 
-# #Subset only positions outside ARTIC v3 primers 
-# library(intervals)
-# starts = findInterval(AnnotatedVCFINFOLevNoPr$V2, mIntervals$V2)
-# ends = findInterval(AnnotatedVCFINFOLevNoPr$V2, mIntervals$V3)
-# 
-# PosOutsideArtic<-AnnotatedVCFINFOLevNoPr$V2[starts != (ends + 1L)]
-# 
-# AnnotatedVCFINFOLevNoPrNoArtic<-subset(AnnotatedVCFINFOLevNoPr,
-#                                        AnnotatedVCFINFOLevNoPr$V2 %in% PosOutsideArtic)
-##
 
 AnnotatedVCFINFOLevNoPrNoSYN<-subset(AnnotatedVCFINFOLevNoPr,AnnotatedVCFINFOLevNoPr$MutType == "missense_variant" |
                                        AnnotatedVCFINFOLevNoPr$MutType == "stop_gained")
