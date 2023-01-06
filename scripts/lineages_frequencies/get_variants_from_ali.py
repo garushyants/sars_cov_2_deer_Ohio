@@ -23,7 +23,12 @@ ref_num = -5
 for record in alignment:
 	seqname = ""
 	if options.short:
-		seqname= str(record.id).split('|')[0].replace("hCoV-19/","")
+		name_parts = str(record.id).split('|')
+		seqname=name_parts[0].replace("hCoV-19/","")
+		for n in name_parts:
+			if "." in n:
+				seqname += " "+n
+				break
 	else:
 		seqname = record.id
 	AlignDict[counter]=seqname
