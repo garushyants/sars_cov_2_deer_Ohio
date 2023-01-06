@@ -352,8 +352,11 @@ AlphaMutsInLineages
 
 #Selecting colors
 borderColour = "#FFFFFF"
-MUTATIONPALETTE = c('#fff7f3','#fde0dd','#fcc5c0','#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177','#49006a')
-MUTATIONPALETTEALPHA = c("#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026")
+#MUTATIONPALETTE = c('#fff7f3','#fde0dd','#fcc5c0','#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177','#49006a')
+MUTATIONPALETTE = c('#fff7f3','#fde0dd','#fcc5c0','#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177','#49006a',
+                    '#49006a','#49006a','#49006a')
+MUTATIONPALETTEALPHA = c("#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026",
+                         "#800026","#800026","#800026")
 
 plotOutbreakInfoAFPerLineageOutbreak<-function(borderColor,pallete,df,allDeerSpikeMutsToPlot)
 {
@@ -431,7 +434,7 @@ AFPlot<-function(df,cltotal,pallete)
   #
   plot<-ggplot(data=dfS, aes(y=ProtChange,x=x,fill=AFinDeer))+
     geom_tile(colour = borderColour)+
-    scale_fill_gradientn(colors = pallete)+
+    scale_fill_gradientn(colours = pallete, limits = c(0.0,1.0), labels = scales::percent)+
     theme_minimal()+
     coord_fixed() +
     labs(x="",y="") +
