@@ -108,7 +108,7 @@ AlphaVariantsInfo$mutation<-tolower(AlphaVariantsInfo$mutationup)
 ########################################
 #Going to outbreak.info to select the varaints that can be potentially of interest
 #Select lineages of interest
-DeltaLineagesToCheck<-c("AY.3", "AY.25", "AY.44", "AY.103","B.1.617.2")
+DeltaLineagesToCheck<-c("AY.3", "AY.25", "AY.44", "AY.75","AY.103","B.1.617.2")
 AlphaLineagesToCheck<-c("B.1.1.7")
 
 
@@ -196,7 +196,7 @@ DeltaDfToSaveMutsFreqLong<-Delta_char_muts[(Delta_char_muts$mutation %in% c(Delt
 AlphaDfToSaveMutsFreqLong<-Alpha_char_muts[(Alpha_char_muts$mutation %in% c(AlphaMutsSpike$mutation,AlphaMutsOther$mutation)),]
 #reshape
 DeltaDfToSaveMutsFreqWide<-reshape(DeltaDfToSaveMutsFreqLong[,c("mutation","lineage","prevalence")], idvar = "mutation", timevar = "lineage", direction ="wide")
-DeltaToSaveNoSingl<-merge(rbind(DeltaMutsSpike,DeltaMutsOther),DeltaDfToSaveMutsFreqWide, by="mutation", all=T)[,c(2:4,7:8,10,12:14,16:20)]
+DeltaToSaveNoSingl<-merge(rbind(DeltaMutsSpike,DeltaMutsOther),DeltaDfToSaveMutsFreqWide, by="mutation", all=T)[,c(2:4,7:8,10,12:14,16:21)]
 DeltaToSaveSingl<-merge(DeltaToSaveNoSingl,DeltaFromAliSingletons[,c(1,3:6)],
                            by.x = c("V2","V5"), by.y = c("V1","V3"))
 
@@ -213,7 +213,7 @@ AlphaToSaveNoSingl$dataset<-rep("Alpha",length(AlphaToSaveNoSingl$V2))
 ###
 MergeBothDatasets<-dplyr::bind_rows(DeltaToSaveFinal,AlphaToSaveNoSingl)
 names(MergeBothDatasets)<-c("POS","ALT","REF","Protein change","gene","EventsInClusters","SamplesWithMutation","NumberOfSamplesInClustersWithMutation",
-                            "Lineages","AY.3","AY.25","AY.44","AY.103","B.1.617.2","SingletonsWithMutation","NumberOfSingletonsWithMutation",
+                            "Lineages","AY.3","AY.25","AY.44","AY.75","AY.103","B.1.617.2","SingletonsWithMutation","NumberOfSingletonsWithMutation",
                             "LineagesSingletons","Dataset","B.1.1.7")
 MergeBothDatasets[is.na(MergeBothDatasets)] <- ""
 write.table(MergeBothDatasets, file ="Table_S8.tsv", quote =F, row.names =F, sep="\t")
