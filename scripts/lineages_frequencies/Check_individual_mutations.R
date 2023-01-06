@@ -424,12 +424,12 @@ HomoplasyPlot<-function(df,cltotal)
   
 AFPlot<-function(df,cltotal,pallete)
 {
-  DeltaDeerToPlot<-df[df$gene == "S",]
-  DeltaDeerToPlot$ProtChange<-factor(DeltaDeerToPlot$ProtChange, levels=as.factor(DeltaDeerToPlot[order(-DeltaDeerToPlot$V2),]$ProtChange))
-  DeltaDeerToPlot$AFinDeer<-DeltaDeerToPlot$count/cltotal
-  DeltaDeerToPlot$x<-rep("AF in deer", length(DeltaDeerToPlot$V2))
+  dfS<-df[df$gene == "S",]
+  dfS$ProtChange<-factor(dfS$ProtChange, levels=as.factor(dfS[order(-dfS$V2),]$ProtChange))
+  dfS$AFinDeer<-dfS$count/cltotal
+  dfS$x<-rep("AF in deer", length(dfS$V2))
   #
-  plot<-ggplot(data=DeltaDeerToPlot, aes(y=ProtChange,x=x,fill=AFinDeer))+
+  plot<-ggplot(data=dfS, aes(y=ProtChange,x=x,fill=AFinDeer))+
     geom_tile(colour = borderColour)+
     scale_fill_gradientn(colors = pallete)+
     theme_minimal()+
