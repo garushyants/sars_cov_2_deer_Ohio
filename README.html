@@ -349,21 +349,32 @@ pre code {
 <h3>This repository contains scripts and data for mutational analysis presented in “SARS-CoV-2 spatial dispersal and fast evolution in free-ranging white-tailed deer in Ohio” by McBride et al.</h3>
 <div id="scripts" class="section level4">
 <h4><em>scripts</em></h4>
-<p>Contains R, python and shell scripts to reproduce the analysis. General scripts to correct vcfs, and manipulate phylogenetic trees are provided. More specific sripts are grouped by folders depending on the type of analysis.</p>
-<p><strong>root-to-tip_regression</strong> contains <em>root_to_tip_regression.py</em> that allows to calculate number of mutations from root to tip by type and gene, assuming that phylogenetic tree as well states at each node are known. <em>root_to_tip_regression_global.R</em> allows to visuzlize obtained counts and perform some statistical analysis. <em>convert_dates_to_float.R</em> is a technical script to convert dates to floats if needed.</p>
-<p><strong>mutational_contexts</strong> allows to reproduce analysis of mutational contexts provided in the paper. The main script is <em>reconstruct_mutational_contexts.R</em></p>
-<p>Scripts in <strong>lineages_frequencies</strong> allows to manipulate outbreak.info for mutations of interest</p>
+<p>Contains R, python and shell scripts to reproduce the analysis.<br />
+General scripts are provided at the directory root.<br />
+More specific sripts are grouped by folders depending on the type of analysis.<br />
+</p>
+<p><strong>root-to-tip_regression</strong> contains <em>root_to_tip_regression.py</em> that allows to calculate number of mutations from root to tip by type and gene, assuming that phylogenetic tree as well states at each node are known. <em>root_to_tip_regression_global.R</em> allows to visuzlize obtained counts and perform some statistical analysis. <em>convert_dates_to_float.R</em> is a technical script to convert dates to floats if needed.<br />
+<strong>mutational_contexts</strong> allows to reproduce analysis of mutational contexts provided in the paper. The main script is <em>reconstruct_mutational_contexts.R</em><br />
+<br />
+Scripts in <strong>lineages_frequencies</strong> allows to manipulate with outbreak.info data for mutations of interest<br />
+</p>
+<p><em>subset_tree_and_alignment.py</em> removes all sequences with missing characters for particular gene from alignment and phylogenetic tree. This script is required to run HyPhy.<br />
+<em>vizualize_clusters.py</em> givenn the set of clusters, vcf and phylognetic tree allows to vizualize clusters and mutations happening at each branch<br />
+</p>
 </div>
 <div id="data" class="section level4">
 <h4><em>data</em></h4>
 <p>Contains phylogenetic trees, information about clusters and singletons, and vcf files with reconstructed mutations.</p>
-<p><em>data/Delta/Delta.clusters.snpeff.corrected.vcf</em> - corrected vcf file with mutations in Delta clusters</p>
-<p><em>data/Delta/Delta.singletons.spneff.vcf</em> - corrected vcf file with mutations in Delta singletons</p>
-<p><em>data/Delta/Delta.clusters.final.csv</em> contains information about Delta</p>
-<p><em>data/Alpha/Alpha.clusters.snpeff.corrected.vcf</em> - corrected vcf file with mutations in Alpha clusters</p>
-<p><em>data/Alpha/Alpha.clusters</em> contains information about Alpha clusters</p>
-<p><em>data/Alpha/global_dataset</em> contains files for root-to-tip regression analysis</p>
-<p>Folder <em>figures</em> contains graphs generated with the provided scripts</p>
+<p><em>data/Delta/Delta.clusters.snpeff.corrected.vcf</em> - corrected vcf file with mutations in Delta clusters<br />
+<em>data/Delta/Delta.singletons.spneff.vcf</em> - corrected vcf file with mutations in Delta singletons<br />
+<em>data/Delta/Delta.clusters.final.csv</em> contains information about Delta<br />
+<em>data/Alpha/Alpha.clusters.snpeff.corrected.vcf</em> - corrected vcf file with mutations in Alpha clusters<br />
+<em>data/Alpha/Alpha.clusters</em> contains information about Alpha clusters<br />
+<em>data/Alpha/global_dataset</em> contains files for root-to-tip regression analysis<br />
+<br />
+<br />
+<br />
+Folder <em>figures</em> contains graphs generated with the provided scripts.</p>
 </div>
 </div>
 
