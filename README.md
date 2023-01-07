@@ -4,13 +4,13 @@
 #### *scripts*
 Contains R, python and shell scripts  to reproduce the analysis.\
 General scripts are provided at the directory root.\
-More specific sripts are grouped by folders depending on the type of analysis.\
+More specific sripts are grouped by folders depending on the type of analysis.
 
 **root-to-tip_regression** contains *root_to_tip_regression.py* that allows to calculate number of mutations from root to tip by type and gene, assuming that phylogenetic tree as well states at each node are known. *root_to_tip_regression_global.R* allows to visuzlize obtained counts and perform some statistical analysis. *convert_dates_to_float.R* is a technical script to convert dates to floats if needed.
 \
 **mutational_contexts** allows to reproduce analysis of mutational contexts provided in the paper. The main script is *reconstruct_mutational_contexts.R*\
 \
-Scripts in **lineages_frequencies** allows to manipulate with outbreak.info data for mutations of interest\
+Scripts in **lineages_frequencies** allows to manipulate with outbreak.info data for mutations of interest.
 
 *subset_tree_and_alignment.py* removes all sequences with missing characters for particular gene from alignment and phylogenetic tree. This script is required to run HyPhy.\
 *vizualize_clusters.py* allows to vizualize clusters and mutations happening at each branch and requires the set of clusters, vcf and phylognetic tree.
