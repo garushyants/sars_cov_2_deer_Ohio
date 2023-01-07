@@ -13,7 +13,7 @@ More specific sripts are grouped by folders depending on the type of analysis.\
 Scripts in **lineages_frequencies** allows to manipulate with outbreak.info data for mutations of interest\
 
 *subset_tree_and_alignment.py* removes all sequences with missing characters for particular gene from alignment and phylogenetic tree. This script is required to run HyPhy.\
-*vizualize_clusters.py* allows to vizualize clusters and mutations happening at each branch and requires the set of clusters, vcf and phylognetic tree \
+*vizualize_clusters.py* allows to vizualize clusters and mutations happening at each branch and requires the set of clusters, vcf and phylognetic tree.\
 
 #### *data* 
  Contains phylogenetic trees, information about clusters and singletons, and vcf files with reconstructed mutations.
