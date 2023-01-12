@@ -30,5 +30,4 @@ Scripts in **lineages_frequencies** allows to manipulate with outbreak.info data
 \
 Folder *figures* contains graphs generated with the provided scripts.
 
-
-
+Folder *supplementary_tables* contains Table S6 describing all mutations in clusters and Table S8 describes recurrent mutations.
