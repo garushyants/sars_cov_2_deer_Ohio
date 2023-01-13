@@ -16,7 +16,7 @@ Scripts in **lineages_frequencies** allows to manipulate with outbreak.info data
 *vizualize_clusters.py* allows to vizualize clusters and mutations happening at each branch and requires the set of clusters, vcf and phylognetic tree.\
 *parse_treetime.py* generates vcf files from treetime trees with reconstracted ancestral states.
 
-*codon_bias/Codon_bias.R allows to reproduce the codon bias analysis
+*codon_bias/Codon_bias.R* allows to reproduce the codon bias analysis
 
 #### *data* 
  Contains phylogenetic trees, information about clusters and singletons, and vcf files with reconstructed mutations.
