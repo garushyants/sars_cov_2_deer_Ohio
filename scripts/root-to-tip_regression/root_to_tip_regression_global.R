@@ -154,7 +154,7 @@ PlotSmis
 #Combine together
 
 top<-ggarrange(PlotAll, labels = c("a"))
-bottom<-ggarrange(PlotSyn,PlotMis,
+middle<-ggarrange(PlotSyn,PlotMis,
           PlotSsyn,PlotSmis,
           ncol=2,
           nrow=2,
@@ -165,16 +165,17 @@ FinalPlot<-ggarrange(top,
           bottom,
           ncol =2,
           widths = c(0.8,1))
+FinalPlot
 
 ###Save figure
 
-ggsave("Figure_root_to_tip_regression.png",path=folder,
-      width=45,height=20,units='cm',
-      dpi=300, plot=FinalPlot)
-
-ggsave("Figure_root_to_tip_regression.svg",path=folder,
-       width=45,height=20,units='cm',
-       dpi=300, plot=FinalPlot)
+# ggsave("Figure_root_to_tip_regression.png",path=folder,
+#       width=45,height=20,units='cm',
+#       dpi=300, plot=FinalPlot)
+# 
+# ggsave("Figure_root_to_tip_regression.svg",path=folder,
+#        width=45,height=20,units='cm',
+#        dpi=300, plot=FinalPlot)
 
 
 ###figure for main text
@@ -230,7 +231,7 @@ GenesForRegression<-subset(GenesDatesMeta, !(GenesDatesMeta$coloringTag %in% exc
 ###plot
 
 #functions
-PlotByGene<-function(gene,syn,mis){
+PlotByGene<-function(gene,syn,mis,laba="a",labb="b"){
   #Plot gene syn
   # gene<-"N"
   # syn<"Nsyn"
@@ -267,7 +268,7 @@ PlotByGene<-function(gene,syn,mis){
   GenePlot<-ggarrange(PlotGenesyn,
                       PlotGenemis,
             ncol =2,
-            labels = c("a","b"),
+            labels = c(laba,labb),
             common.legend = T,
             legend = "right")
 
@@ -289,12 +290,21 @@ ggsave("M_mutations_global_dataset.png",path=folder,
        dpi=300)
 ORF10Plot<-PlotByGene("ORF10","ORF10syn","ORF10mis")
 ORF10Plot
-ORF1abPlot<-PlotByGene("ORF1ab","ORF1absyn","ORF1abmis")
+ORF1abPlot<-PlotByGene("ORF1ab","ORF1absyn","ORF1abmis","f","g")
 ORF1abPlot
-ggsave("ORF1ab_mutations_global_dataset.png",path=folder,
-       plot=ORF1abPlot,
-       width=30,height=15,units='cm',
-       dpi=300)
+
+FinalPlotORF1ab<-ggarrange(FinalPlot,
+                           ORF1abPlot,
+                           heights=c(1,0.7),
+                           ncol=1)
+
+ggsave("Figure_root_to_tip_regression_withORF1ab.png",path=folder,
+       width=45,height=35,units='cm',
+       dpi=300, plot=FinalPlotORF1ab)
+
+ggsave("Figure_root_to_tip_regression_withORF1ab.svg",path=folder,
+       width=45,height=35,units='cm',
+       dpi=300, plot=FinalPlotORF1ab)
 ORF3aPlot<-PlotByGene("ORF3a","ORF3asyn","ORF3amis")
 ORF3aPlot
 ggsave("ORF3a_mutations_global_dataset.png",path=folder,
