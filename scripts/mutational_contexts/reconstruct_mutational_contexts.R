@@ -96,19 +96,24 @@ subsample_names <-as.character(seq(1,10))
 vcf_files_subsample<-c("all1.header.vcf","all2.header.vcf","all3.header.vcf","all4.header.vcf","all5.header.vcf",
              "all6.header.vcf","all7.header.vcf","all8.header.vcf","all9.header.vcf","all10.header.vcf")
 
-vcfsSub <- read_vcfs_as_granges(vcf_files_subsample, subsample_names, genome = ref_genome)
+vcfsSub <- read_vcfs_as_granges(vcf_files_subsample, subsample_names, genome = ref_genome, 
+                                predefined_dbs_mbs = T)#,
+                                #remove_duplicate_variants = F)
 
 type_occurrencesSubsample <- mut_type_occurrences(vcfsSub, ref_genome)
 
 #plot muts by type all
-SingleMutSubsample<-plot_spectrum(type_occurrencesSubsample,legend = TRUE) +
+SingleMutSubsample<-plot_spectrum(type_occurrencesSubsample,legend = TRUE,
+                                  indv_points = T,
+                                  error_bars = "stdev") +
   theme_minimal()+
   theme(text = element_text(size=10),
         legend.title = element_text(size=8))+
   scale_y_continuous(limits = c(0,0.75))
 SingleMutSubsample
 
-mut_matSub <- mut_matrix(vcf_list = vcfsSub, ref_genome = ref_genome)
+
+# mut_matSub <- mut_matrix(vcf_list = vcfsSub, ref_genome = ref_genome)
 # Mut_96_plotSub<-plot_96_profile(mut_matSub) +
 #   theme_minimal()+
 #   theme(text = element_text(size=10),
@@ -116,5 +121,5 @@ mut_matSub <- mut_matrix(vcf_list = vcfsSub, ref_genome = ref_genome)
 # Mut_96_plotSub
 setwd("./../")
 ggsave("SARS-CoV-2_human_subsamples_spectrum_all.svg", path=folder,plot = SingleMutSubsample,
-       width =10, height =10, units='cm', dpi =400)
+       width =15, height =20, units='cm', dpi =300)
 

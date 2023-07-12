@@ -1,4 +1,4 @@
-### This repository contains scripts and data for mutational analysis presented in "SARS-CoV-2 spatial dispersal and fast evolution in free-ranging white-tailed deer in Ohio" by McBride et al. 2023
+### This repository contains scripts and data for mutational analysis presented in "Accelerated evolution of SARS-CoV-2 in free-ranging white-tailed deer" by McBride, Garushyants, Franks et al. 2023, Nature Communications
 
 
 #### *scripts*

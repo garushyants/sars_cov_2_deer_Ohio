@@ -95,6 +95,8 @@ RSCUChangeToPlot$Dataset<-factor(RSCUChangeToPlot$Dataset, levels = c("before","
 P2<-ggplot(data=RSCUChangeToPlot,
        aes(x=Dataset, y=RSCU_Deer, fill = Dataset))+
   geom_boxplot() +
+  geom_jitter(color="black", size=1.2, alpha=0.5,
+              width=0.2) +
   theme_minimal()+
   stat_compare_means(label.x=1.2, label.y =2.2, size =3)
 P2
